@@ -1,4 +1,4 @@
-AC_INIT(executors, [0.1.0])
+AC_INIT(executors, [0.0.1])
 AC_CONFIG_SRCDIR(include/experimental/type_traits)
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([tar-ustar])
@@ -16,7 +16,7 @@ AC_ARG_WITH(boost,
     CPPFLAGS="$CPPFLAGS -DEXECUTORS_NO_BOOST=1"
   else
     CPPFLAGS="$CPPFLAGS -I${withval}"
-    LIBS="$LIBS -L${withval}/stage/lib -lboost_coroutine -lboost_context -lboost_thread -lboost_system"
+    LIBS="$LIBS -L${withval}/stage/lib -lboost_coroutine -lboost_thread -lboost_context -lboost_system"
   fi
 ],
 [
@@ -68,12 +68,10 @@ AC_OUTPUT([
   src/examples/channel/Makefile
   src/examples/executor/Makefile
   src/examples/timer/Makefile
-  src/examples/trading/Makefile
   src/tests/Makefile
   src/tests/execution_context/Makefile
   src/tests/executor/Makefile
   src/tests/loop_scheduler/Makefile
-  src/tests/memory/Makefile
   src/tests/no_executor/Makefile
   src/tests/performance/Makefile
   src/tests/strand/Makefile

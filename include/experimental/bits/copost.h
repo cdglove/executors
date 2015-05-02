@@ -16,7 +16,6 @@
 
 namespace std {
 namespace experimental {
-inline namespace concurrency_v1 {
 
 struct __coinvoke_post
 {
@@ -40,7 +39,7 @@ inline typename __coinvoke_without_executor<_CompletionTokens...>::_Result
 template <class _Executor>
 struct __coinvoke_post_ex
 {
-  typename decay<_Executor>::type __e;
+  typename remove_reference<_Executor>::type __e;
 
   template <class _E, class _F, class _A>
   void operator()(_E&, _F&& __f, const _A& __a)
@@ -59,7 +58,6 @@ inline typename __coinvoke_with_executor<_Executor, _CompletionTokens...>::_Resu
   return __coinvoker_launcher<_Head, _Tail>(__tokens...)._Go(__coinvoke_post_ex<_Executor>{__e}, __tokens...);
 }
 
-} // inline namespace concurrency_v1
 } // namespace experimental
 } // namespace std
 
