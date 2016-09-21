@@ -14,6 +14,7 @@
 
 #include <experimental/executor>
 #include <experimental/bits/function_traits.h>
+#include <experimental/bits/type_id.h>
 
 namespace std {
 namespace experimental {
@@ -36,7 +37,7 @@ class __continuation
 {
 public:
   virtual ~__continuation() {}
-  virtual const type_info& _Target_type() = 0;
+  virtual const __type_info& _Target_type() = 0;
   virtual void* _Target() = 0;
   virtual const void* _Target() const = 0;
   virtual executor _Get_executor() const noexcept = 0;
@@ -88,9 +89,9 @@ public:
         std::forward<_Args>(__args)...);
   }
 
-  virtual const type_info& _Target_type()
+  virtual const __type_info& _Target_type()
   {
-    return typeid(_M_continuation);
+    return __type_id(_M_continuation);
   }
 
   virtual void* _Target()
@@ -205,7 +206,7 @@ inline void continuation<_R(_Args...)>::operator()(_Args... __args)
 }
 
 template <class _R, class... _Args>
-inline const type_info& continuation<_R(_Args...)>::target_type() const noexcept
+inline const __type_info& continuation<_R(_Args...)>::target_type() const noexcept
 {
   return _M_impl->_Target_type();
 }
@@ -344,7 +345,7 @@ inline continuation<>::executor_type continuation<>::get_executor() const noexce
   return _M_impl ? _M_impl->_Get_executor() : executor_type();
 }
 
-inline const type_info& continuation<>::target_type() const noexcept
+inline const __type_info& continuation<>::target_type() const noexcept
 {
   return _M_impl->_Target_type();
 }

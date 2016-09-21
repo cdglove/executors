@@ -69,7 +69,7 @@ public:
 
   // continuation target access:
 
-  const type_info& target_type() const noexcept;
+  const __type_info& target_type() const noexcept;
   template <class _Continuation> _Continuation* target() noexcept;
   template <class _Continuation> const _Continuation* target() const noexcept;
 
@@ -134,7 +134,7 @@ public:
 
   // continuation target access:
 
-  const type_info& target_type() const noexcept;
+  const __type_info& target_type() const noexcept;
   template <class _Continuation> _Continuation* target() noexcept;
   template <class _Continuation> const _Continuation* target() const noexcept;
 

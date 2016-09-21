@@ -15,6 +15,7 @@
 #include <atomic>
 #include <memory>
 #include <experimental/bits/small_block_recycler.h>
+#include <experimental/bits/type_id.h>
 
 namespace std {
 namespace experimental {
@@ -102,7 +103,7 @@ public:
   virtual void _Dispatch(__function_ptr&& __f) = 0;
   virtual void _Post(__function_ptr&& __f) = 0;
   virtual void _Defer(__function_ptr&& __f) = 0;
-  virtual const type_info& _Target_type() const = 0;
+  virtual const __type_info& _Target_type() const = 0;
   virtual void* _Target() = 0;
   virtual const void* _Target() const = 0;
   virtual bool _Equals(const __executor_impl_base* __e) const noexcept = 0;
@@ -164,9 +165,9 @@ public:
     _M_executor.defer(std::move(__f), __small_block_allocator<void>());
   }
 
-  virtual const type_info& _Target_type() const
+  virtual const __type_info& _Target_type() const
   {
-    return typeid(_M_executor);
+    return __type_id(_M_executor);
   }
 
   virtual void* _Target()
@@ -250,9 +251,9 @@ public:
     _M_executor.defer(std::move(__f), __small_block_allocator<void>());
   }
 
-  virtual const type_info& _Target_type() const
+  virtual const __type_info& _Target_type() const
   {
-    return typeid(system_executor);
+    return __type_id<system_executor>();
   }
 
   virtual void* _Target()
@@ -336,9 +337,9 @@ public:
     throw bad_executor();
   }
 
-  virtual const type_info& _Target_type() const
+  virtual const __type_info& _Target_type() const
   {
-    return typeid(void);
+    return __type_id<void>();
   }
 
   virtual void* _Target()
@@ -473,7 +474,7 @@ inline executor::operator bool() const noexcept
   return _M_impl != __bad_executor_impl::_Create();
 }
 
-inline const type_info& executor::target_type() const noexcept
+inline const __type_info& executor::target_type() const noexcept
 {
   return _M_impl->_Target_type();
 }

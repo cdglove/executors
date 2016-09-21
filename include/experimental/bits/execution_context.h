@@ -157,7 +157,7 @@ template <class _Service> _Service& use_service(execution_context& __c)
   __lock.unlock();
 
   // Check if service already exists.
-  const type_info* __id = &typeid(__service_key<_Service>);
+  const __type_info* __id = &__type_id<__service_key<_Service>>();
   execution_context::service* __s = __first;
   while (__s)
   {
@@ -196,7 +196,7 @@ template <class _Service, class... _Args> _Service&
   __lock.unlock();
 
   // Check if service already exists.
-  const type_info* __id = &typeid(__service_key<_Service>);
+  const __type_info* __id = &__type_id<__service_key<_Service>>();
   execution_context::service* __s = __first;
   while (__s)
   {
@@ -232,7 +232,7 @@ template <class _Service> bool has_service(execution_context& __c) noexcept
   execution_context::service* const __first = __c._M_first_service;
   __c._M_mutex.unlock();
 
-  const type_info* __id = &typeid(__service_key<_Service>);
+  const __type_info* __id = &__type_id<__service_key<_Service>>();
   execution_context::service* __s = __first;
   while (__s)
   {

@@ -15,6 +15,7 @@
 #include <experimental/bits/associated_executor.h>
 #include <experimental/bits/executor_wrapper_base.h>
 #include <experimental/bits/function_traits.h>
+#include <experimental/bits/type_id.h>
 #include <experimental/memory>
 #include <experimental/type_traits>
 #include <memory>
@@ -113,7 +114,7 @@ private:
   template <class _Service> bool friend has_service(execution_context& __c) noexcept;
   friend struct default_delete<service>;
   execution_context& _M_context;
-  const type_info* _M_id;
+  const __type_info* _M_id;
   service* _M_next;
   bool _M_shutdown;
 };
@@ -396,7 +397,7 @@ public:
 
   // executor target access:
 
-  const type_info& target_type() const noexcept;
+  const __type_info& target_type() const noexcept;
   template <class _Executor> _Executor* target() noexcept;
   template <class _Executor> const _Executor* target() const noexcept;
 
